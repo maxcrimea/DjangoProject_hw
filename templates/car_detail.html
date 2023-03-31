@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <title>Car Detail</title>
     <link rel="stylesheet" href="{% static 'css/detail_css.css' %}">
+    <style>
+        table{
+            width: 550px;
+        }
+    </style>
 </head>
 <body>
 {% include 'header.html' %}
@@ -13,11 +18,11 @@
 </button>
 
 <button type="button" class="btn btn-outline-info">
-    <a href="/car_list/{{car_detail.id}}/delete/" style="text-decoration: none; color: black">Удалить</a>
+    <a href="/car_list/{{object.id}}/delete/" style="text-decoration: none; color: black">Удалить</a>
 </button>
 
 <button type="button" class="btn btn-outline-info">
-    <a href="/car_list/{{car_detail.id}}/update/" style="text-decoration: none; color: black">Редактировать</a>
+    <a href="/car_list/{{object.id}}/update/" style="text-decoration: none; color: black">Редактировать</a>
 </button>
 
 <button type="button" class="btn btn-outline-info">
@@ -25,38 +30,63 @@
 </button>
 
 <button type="button" class="btn btn-outline-info">
-    <a href="/car_list/{{car_detail.id}}/reviews/" style="text-decoration: none; color: black">Оставить отзыв</a>
+    <a href="/car_reviews/" style="text-decoration: none; color: black">Оставить отзыв</a>
 </button>
 
 <div class="container">
     <div class="post">
         <div class="post-image">
-            <img src="{{car_detail.image.url}}">
+            <img src="{{object.image.url}}">
         </div>
         <div class="post-content">
             <div class="post-header">
-                <h1>{{car_detail.title}}</h1>
+                <h1>{{object.title}}</h1>
                 <div class="post-meta">
-                    <time class="cost">{{car_detail.cost}} сом</time>
-                    <span class="type">{{car_detail.car_type}}</span>
-                    <span class="create_date">{{car_detail.created_date}}</span>
-                    <p><b>{{car_detail.specifications}}</b></p>
-                    <p><b>Модельный год: {{car_detail.model_year}}</b></p>
-                    <p><b>Страна изготовитель: {{car_detail.manufacturing_country}}</b></p>
+                    <time class="cost">{{object.cost}} сом</time>
+                    <span class="type">{{object.car_type}}</span>
+                    <span class="create_date">{{object.created_date}}</span>
+                    <p><b>{{object.specifications}}</b></p>
+                    <p><b>Модельный год: {{object.model_year}}</b></p>
+                    <p><b>Страна изготовитель: {{object.manufacturing_country}}</b></p>
                     <br>
                     <br>
 
                 </div>
             </div>
-            <p>{{car_detail.description}}</p>
-            <p><b>Отзывы: </b>{{car_detail.reviews}}</p>
+            <p>{{object.description}}</p>
+            <table border="4">
+                <tr>
+                    <td>Отзывы: </td> &nbsp; <td> Звезды: </td> &nbsp; <td>Дата создания: </td>
+                </tr>
+
+                {% for j in object.comment_object.all %}
+                <tr>
+                    <td>{{j.text}}</td> <td>{{j.rate_stars}}</td> <td>{{j.created_date}}</td>
+                </tr>
+                {% endfor %}
+<!--                {% for review in object.comment_object.all %}-->
+<!--            <div class="media py-5">-->
+<!--&lt;!&ndash;                <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image">&ndash;&gt;-->
+<!--                <div class="media-body mt-4">-->
+<!--                    <h5 class="mt-0 editContent">-->
+<!--                        {{ review.name }}-->
+<!--                    </h5>-->
+<!--                    <p class="mt-2 editContent">-->
+<!--                        {{ review.text }}-->
+<!--                    </p>-->
+<!--                    <p class="mt-2 editContent">-->
+<!--                        {{ review.rate_stars }}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        {% endfor %}-->
+            </table>
         </div>
     </div>
 </div>
 <center>
 <table border="5">
     <tr>
-        <td><iframe src="{{car_detail.video}}" frameborder="0" width="640" height="420"></iframe></td>
+        <td><iframe src="{{object.video}}" frameborder="0" width="640" height="420"></iframe></td>
     </tr>
 </table>
 </center>
